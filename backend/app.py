@@ -16,15 +16,18 @@ app.register_blueprint(waste_bp, url_prefix="/api/waste")
 app.register_blueprint(centers_bp, url_prefix="/api/centers")
 app.register_blueprint(dashboard_bp, url_prefix="/api/dashboard")
 
+from backend.services.db_service import check_firebase_connection
+
 @app.route("/")
 @app.route("/health")
 def health_check():
     """Simple server status endpoint."""
+    firebase_ok = check_firebase_connection()
     return jsonify({
         "status": "online",
         "app": "WasteGuide AI Backend",
-        "demo_mode": config.IS_DEMO_MODE,
-        "firebase_connected": config.IS_DEMO_MODE is False
+        "demo_mode": config.IS_DEMO_MODE or not firebase_ok,
+        "firebase_connected": firebase_ok
     }), 200
 
 # Error Handlers

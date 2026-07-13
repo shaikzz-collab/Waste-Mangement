@@ -1,6 +1,7 @@
 import os
 import json
 import time
+import requests
 from datetime import datetime
 from backend.config import config
 from backend.config.firebase_config import db
@@ -94,6 +95,62 @@ MOCK_CENTERS = [
 if not os.path.exists(DATA_DIR):
     os.makedirs(DATA_DIR)
 
+# Serialization/Deserialization Helpers for Firestore REST API
+def to_firestore_value(val):
+    if isinstance(val, bool):
+        return {"booleanValue": val}
+    elif isinstance(val, (int, float)):
+        return {"doubleValue": float(val)}
+    elif isinstance(val, list):
+        return {"arrayValue": {"values": [to_firestore_value(x) for x in val]}}
+    elif isinstance(val, dict):
+        return {"mapValue": {"fields": {k: to_firestore_value(v) for k, v in val.items()}}}
+    else:
+        return {"stringValue": str(val)}
+
+def to_firestore_document(d):
+    return {"fields": {k: to_firestore_value(v) for k, v in d.items()}}
+
+def from_firestore_value(val):
+    if "stringValue" in val:
+        return val["stringValue"]
+    elif "booleanValue" in val:
+        return val["booleanValue"]
+    elif "doubleValue" in val:
+        return float(val["doubleValue"])
+    elif "integerValue" in val:
+        return int(val["integerValue"])
+    elif "arrayValue" in val:
+        values = val["arrayValue"].get("values", [])
+        return [from_firestore_value(v) for v in values]
+    elif "mapValue" in val:
+        fields = val["mapValue"].get("fields", {})
+        return {k: from_firestore_value(v) for k, v in fields.items()}
+    return None
+
+def from_firestore_document(doc):
+    fields = doc.get("fields", {})
+    result = {k: from_firestore_value(v) for k, v in fields.items()}
+    name = doc.get("name", "")
+    if name:
+        result["id"] = name.split("/")[-1]
+    return result
+
+def check_firebase_connection() -> bool:
+    """Verifies that Firestore REST API is reachable and active."""
+    if db is not None:
+        return True
+    if not config.FIREBASE_PROJECT_ID or not config.FIREBASE_API_KEY:
+        return False
+    try:
+        url = f"https://firestore.googleapis.com/v1/projects/{config.FIREBASE_PROJECT_ID}/databases/(default)/documents?key={config.FIREBASE_API_KEY}"
+        res = requests.get(url, timeout=3)
+        # 200, 403, or 404 all indicate successful API handshake and valid endpoint path
+        return res.status_code in [200, 403, 404]
+    except Exception as e:
+        print(f"Error checking Firestore connection: {e}")
+        return False
+
 def read_local_history() -> list:
     """Reads history from a local JSON file."""
     if not os.path.exists(HISTORY_FILE):
@@ -114,9 +171,7 @@ def write_local_history(history: list):
         print(f"Error writing local history file: {e}")
 
 def save_scan_history(user_id: str, item_name: str, classification: dict) -> dict:
-    """
-    Saves a scanned item to database history.
-    """
+    """Saves a scanned item to database history."""
     history_item = {
         "item_name": item_name,
         "category": classification.get("category", "Other"),
@@ -135,14 +190,28 @@ def save_scan_history(user_id: str, item_name: str, classification: dict) -> dic
     
     if db is not None:
         try:
-            # Save to Firestore under user-specific subcollection
+            # Save to Firestore under user-specific subcollection via Admin SDK
             doc_ref = db.collection("users").document(user_id).collection("history").document()
             history_item["id"] = doc_ref.id
             doc_ref.set(history_item)
             return history_item
         except Exception as e:
-            print(f"Firestore save error: {e}. Falling back to file storage.")
+            print(f"Firestore Admin SDK save error: {e}. Trying REST API fallback.")
             
+    # Try Firestore REST API
+    if config.FIREBASE_PROJECT_ID and config.FIREBASE_API_KEY:
+        try:
+            url = f"https://firestore.googleapis.com/v1/projects/{config.FIREBASE_PROJECT_ID}/databases/(default)/documents/users/{user_id}/history?key={config.FIREBASE_API_KEY}"
+            payload = to_firestore_document(history_item)
+            res = requests.post(url, json=payload, timeout=5)
+            if res.status_code in [200, 201]:
+                doc_data = res.json()
+                return from_firestore_document(doc_data)
+            else:
+                print(f"Firestore REST save returned status {res.status_code}: {res.text}. Falling back to file.")
+        except Exception as e:
+            print(f"Firestore REST save error: {e}. Falling back to file.")
+
     # File storage fallback
     history = read_local_history()
     history_item["id"] = f"scan-{int(time.time() * 1000)}"
@@ -152,32 +221,39 @@ def save_scan_history(user_id: str, item_name: str, classification: dict) -> dic
     return history_item
 
 def get_scan_history(user_id: str) -> list:
-    """
-    Retrieves all scan history for a user, sorted by newest first.
-    """
+    """Retrieves all scan history for a user, sorted by newest first."""
     if db is not None:
         try:
             history_ref = db.collection("users").document(user_id).collection("history").order_by("timestamp", direction="DESCENDING")
             docs = history_ref.stream()
             return [doc.to_dict() for doc in docs]
         except Exception as e:
-            print(f"Firestore read error: {e}. Falling back to file storage.")
+            print(f"Firestore Admin SDK read error: {e}. Trying REST API fallback.")
             
+    # Try Firestore REST API
+    if config.FIREBASE_PROJECT_ID and config.FIREBASE_API_KEY:
+        try:
+            url = f"https://firestore.googleapis.com/v1/projects/{config.FIREBASE_PROJECT_ID}/databases/(default)/documents/users/{user_id}/history?key={config.FIREBASE_API_KEY}"
+            res = requests.get(url, timeout=5)
+            if res.status_code == 200:
+                data = res.json()
+                documents = data.get("documents", [])
+                results = [from_firestore_document(doc) for doc in documents]
+                results.sort(key=lambda x: x.get("timestamp", ""), reverse=True)
+                return results
+            else:
+                print(f"Firestore REST read returned status {res.status_code}: {res.text}. Falling back to file.")
+        except Exception as e:
+            print(f"Firestore REST read error: {e}. Falling back to file.")
+
     # File storage fallback
     history = read_local_history()
-    # Filter by user_id
     user_history = [item for item in history if item.get("user_id") == user_id]
-    # Sort by timestamp descending
     user_history.sort(key=lambda x: x.get("timestamp", ""), reverse=True)
     return user_history
 
 def get_collection_centers(category: str = None) -> list:
-    """
-    Retrieves recycling centers, optionally filtered by category.
-    """
-    # In both online and offline mode, we use MOCK_CENTERS as a default database
-    # because real geographical data is usually mock or statically defined for demos.
-    # However, if Firestore is available, we could check if there are documents in a 'centers' collection.
+    """Retrieves recycling centers, optionally filtered by category."""
     if db is not None:
         try:
             centers_ref = db.collection("centers")
@@ -196,9 +272,7 @@ def get_collection_centers(category: str = None) -> list:
     return MOCK_CENTERS
 
 def get_dashboard_stats(user_id: str) -> dict:
-    """
-    Aggregates metrics for the dashboard.
-    """
+    """Aggregates metrics for the dashboard."""
     history = get_scan_history(user_id)
     
     total_scans = len(history)
@@ -210,32 +284,25 @@ def get_dashboard_stats(user_id: str) -> dict:
     if total_scans > 0:
         recycling_rate = round((recycled_count / total_scans) * 100, 1)
         
-    # Breakdown by category
     category_counts = {}
     for item in history:
         cat = item.get("category", "Other")
         category_counts[cat] = category_counts.get(cat, 0) + 1
         
-    # Standard categories structure for ChartJS
     categories = ["Plastic", "Metal", "Glass", "Paper", "Organic", "E-Waste", "Hazardous", "Other"]
     breakdown = {cat: category_counts.get(cat, 0) for cat in categories}
     
-    # Simple mock timeline stats (monthly)
-    # If the user has history items, we can bucket them by month, else supply nice default data
     timeline = []
     if total_scans > 0:
-        # Group real logs
         months = {}
         for item in history:
             ts = item.get("timestamp", "")
             if ts:
-                # Format: "YYYY-MM"
                 month = ts[:7]
                 months[month] = months.get(month, {"scanned": 0, "recycled": 0})
                 months[month]["scanned"] += 1
                 if item.get("recyclable"):
                     months[month]["recycled"] += 1
-        # Convert to list and sort by month
         sorted_months = sorted(months.keys())
         for m in sorted_months:
             timeline.append({
@@ -244,14 +311,13 @@ def get_dashboard_stats(user_id: str) -> dict:
                 "recycled": months[m]["recycled"]
             })
     else:
-        # Provide default template timeline if history is empty
         timeline = [
             {"month": "2026-02", "scanned": 12, "recycled": 8},
             {"month": "2026-03", "scanned": 18, "recycled": 14},
             {"month": "2026-04", "scanned": 15, "recycled": 11},
             {"month": "2026-05", "scanned": 22, "recycled": 18},
             {"month": "2026-06", "scanned": 30, "recycled": 24},
-            {"month": "2026-07", "scanned": total_scans, "recycled": recycled_count} # current month
+            {"month": "2026-07", "scanned": total_scans, "recycled": recycled_count}
         ]
         
     return {

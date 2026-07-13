@@ -2,6 +2,12 @@
 
 ![WasteGuide AI Banner](./docs/images/banner.png)
 
+### 🔗 Live Deployment & Demo
+- **Production Client App**: [https://wasteguideai-8133c.web.app](https://wasteguideai-8133c.web.app)
+- **API Base Endpoint**: `http://localhost:5000/api` (Local Dev) / `[Insert Hosted Server Link]` (Production)
+
+---
+
 WasteGuide AI is a production-ready, AI-powered waste management operational console designed to automate material classification, calculate recovery efficiency, and map collection facilities. It features a retro-futuristic dark green terminal aesthetics with glowing green states, customized scanline animations, and real-time LLM-driven intelligence.
 
 ---

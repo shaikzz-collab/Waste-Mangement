@@ -1,0 +1,124 @@
+@import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+
+@theme {
+  --color-bg-brand: #07140F;
+  --color-surface-brand: #10251C;
+  --color-border-brand: #204732;
+  --color-accent-brand: #37D67A;
+  --color-text-brand: #E8FFF3;
+  --color-muted-brand: #8AA89A;
+
+  --font-mono: "Space Mono", ui-monospace, Consolas, monospace;
+  --font-sans: "DM Sans", system-ui, -apple-system, sans-serif;
+  --font-display: "Barlow Condensed", sans-serif;
+}
+
+/* Custom resets & styling */
+body {
+  background-color: #07140F; /* Fallback */
+  color: #E8FFF3;
+  font-family: "DM Sans", sans-serif;
+}
+
+/* Glow effects */
+.terminal-glow {
+  box-shadow: 0 0 15px rgba(55, 214, 122, 0.15);
+}
+
+.terminal-glow-strong {
+  box-shadow: 0 0 25px rgba(55, 214, 122, 0.35);
+}
+
+.text-glow {
+  text-shadow: 0 0 8px rgba(55, 214, 122, 0.6);
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #07140F;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #204732;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #37D67A;
+}
+
+/* Leaflet Overrides */
+.leaflet-container {
+  background-color: #07140F !important;
+  color: #E8FFF3 !important;
+  font-family: "Space Mono", monospace !important;
+}
+
+.leaflet-popup-content-wrapper {
+  background: #10251C !important;
+  color: #E8FFF3 !important;
+  border: 1px solid #204732 !important;
+  border-radius: 4px !important;
+  box-shadow: 0 0 15px rgba(55, 214, 122, 0.2) !important;
+}
+
+.leaflet-popup-tip {
+  background: #10251C !important;
+  border: 1px solid #204732 !important;
+}
+
+.leaflet-bar {
+  border: 1px solid #204732 !important;
+}
+
+.leaflet-bar a {
+  background-color: #10251C !important;
+  color: #37D67A !important;
+  border-bottom: 1px solid #204732 !important;
+}
+
+.leaflet-bar a:hover {
+  background-color: #204732 !important;
+  color: #E8FFF3 !important;
+}
+
+/* Terminal retro animations */
+@keyframes scanline {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+.scanline::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  z-index: 2;
+  background-size: 100% 2px, 3px 100%;
+  pointer-events: none;
+}
+
+.scanline {
+  position: relative;
+  overflow: hidden;
+}
+
+.terminal-cursor::after {
+  content: "▋";
+  animation: blink 1s steps(2, start) infinite;
+}
+
+@keyframes blink {
+  to { visibility: hidden; }
+}

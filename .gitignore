@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+/frontend/node_modules/
+
+# Production builds
+dist/
+/frontend/dist/
+
+# Local Environment Variables & Secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+/frontend/.env
+/backend/.env
+*service-account.json
+
+# Local Python caches & environment files
+__pycache__/
+*.pyc
+venv/
+.venv/
+env/
+/backend/venv/
+
+# Local databases
+/backend/data/history.json
+/backend/data/
+
+# Editor / OS settings
+.DS_Store
+.vscode/
+.idea/
+Thumbs.db

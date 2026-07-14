@@ -29,7 +29,7 @@ MOCK_WASTE_DATA = {
     "aluminum can": {
         "category": "Metal",
         "emoji": "🥫",
-        "recyclable": True,
+        "recyclable":True,
         "reusable": False,
         "hazardous": False,
         "hazard_warning": "",
@@ -301,7 +301,7 @@ def analyze_waste_item(item_name: str) -> dict:
         )
         
         payload = {
-            "model": "llama3-8b-8192",
+            "model": "llama-3.1-8b-instant",
             "messages": [
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": f"Classify the item: {item_name}"}

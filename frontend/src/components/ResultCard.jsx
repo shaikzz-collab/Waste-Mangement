@@ -12,11 +12,23 @@ const ResultCard = ({ result, title }) => {
     hazardous,
     hazard_warning,
     disposal_instructions,
-    recycling_steps = [],
-    eco_suggestions = [],
-    facility_types = [],
+    recycling_steps,
+    eco_suggestions,
+    facility_types,
     ai_source = "WasteGuide AI"
   } = result;
+
+  const steps = Array.isArray(recycling_steps)
+    ? recycling_steps
+    : (typeof recycling_steps === "string" && recycling_steps ? [recycling_steps] : []);
+
+  const suggestions = Array.isArray(eco_suggestions)
+    ? eco_suggestions
+    : (typeof eco_suggestions === "string" && eco_suggestions ? [eco_suggestions] : []);
+
+  const facilities = Array.isArray(facility_types)
+    ? facility_types
+    : (typeof facility_types === "string" && facility_types ? [facility_types] : []);
 
   return (
     <div className="bg-[#10251C] border-2 border-[#204732] rounded-lg p-6 text-[#E8FFF3] font-mono terminal-glow max-w-4xl mx-auto w-full transition-all duration-300 hover:border-[#37D67A]/40">
@@ -146,14 +158,14 @@ const ResultCard = ({ result, title }) => {
             </p>
           </div>
 
-          {facility_types.length > 0 && (
+          {facilities.length > 0 && (
             <div>
               <h3 className="text-sm text-[#37D67A] uppercase tracking-wider border-b border-[#204732] pb-1 mb-2 font-bold flex items-center gap-2">
                 <Building2 size={16} />
                 Accepted Facility Types
               </h3>
               <ul className="space-y-1.5">
-                {facility_types.map((fac, idx) => (
+                {facilities.map((fac, idx) => (
                   <li key={idx} className="flex items-center gap-2 text-xs text-[#8AA89A] font-sans">
                     <span className="w-1.5 h-1.5 bg-[#37D67A] rounded-full"></span>
                     <span>{fac}</span>
@@ -166,13 +178,13 @@ const ResultCard = ({ result, title }) => {
 
         {/* Right Column: Steps & Eco tips */}
         <div className="space-y-6">
-          {recycling_steps.length > 0 && (
+          {steps.length > 0 && (
             <div>
               <h3 className="text-sm text-[#37D67A] uppercase tracking-wider border-b border-[#204732] pb-1 mb-2 font-bold flex items-center gap-2">
                 <span className="text-glow">▋</span> Numbered Recycling Steps
               </h3>
               <ol className="space-y-3 font-sans">
-                {recycling_steps.map((step, index) => (
+                {steps.map((step, index) => (
                   <li key={index} className="flex gap-2.5 text-xs text-[#8AA89A] leading-relaxed">
                     <span className="flex-shrink-0 flex items-center justify-center w-5 h-5 rounded bg-[#07140F] border border-[#204732] font-mono text-[10px] text-[#37D67A] font-semibold">
                       {index + 1}
@@ -184,14 +196,14 @@ const ResultCard = ({ result, title }) => {
             </div>
           )}
 
-          {eco_suggestions.length > 0 && (
+          {suggestions.length > 0 && (
             <div>
               <h3 className="text-sm text-[#37D67A] uppercase tracking-wider border-b border-[#204732] pb-1 mb-2 font-bold flex items-center gap-2">
                 <Lightbulb size={16} className="text-[#37D67A]" />
                 Eco Suggestions & Reduction
               </h3>
               <ul className="space-y-3 font-sans">
-                {eco_suggestions.map((sug, index) => (
+                {suggestions.map((sug, index) => (
                   <li key={index} className="flex gap-2 text-xs text-[#8AA89A] leading-relaxed">
                     <span className="text-[#37D67A] font-bold">»</span>
                     <span>{sug}</span>

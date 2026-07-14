@@ -246,7 +246,7 @@ const MapPage = () => {
                 <div className="border-t border-[#204732]/60 pt-3">
                   <p className="text-[9px] font-mono uppercase tracking-wider text-[#8AA89A] mb-2 font-bold">Materials Accepted:</p>
                   <ul className="grid grid-cols-1 gap-1.5">
-                    {selectedCenter.accepted_items.map((item, idx) => (
+                    {(Array.isArray(selectedCenter.accepted_items) ? selectedCenter.accepted_items : []).map((item, idx) => (
                       <li key={idx} className="flex items-center gap-1.5 text-[11px] text-[#E8FFF3] font-sans">
                         <span className="w-1 h-1 rounded-full bg-[#37D67A]"></span>
                         <span>{item}</span>

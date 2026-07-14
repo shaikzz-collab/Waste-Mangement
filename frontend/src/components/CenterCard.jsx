@@ -71,7 +71,7 @@ const CenterCard = ({ center, isSelected, onSelect }) => {
       <div className="border-t border-[#204732]/50 pt-2.5">
         <p className="text-[9px] uppercase tracking-wider text-[#8AA89A] mb-1.5">Accepted Materials:</p>
         <div className="flex flex-wrap gap-1">
-          {accepted_items.map((item, idx) => (
+          {(accepted_items || []).map((item, idx) => (
             <span
               key={idx}
               className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-[#07140F] text-[#8AA89A] border border-[#204732]/60 text-[9px] font-sans"

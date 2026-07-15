@@ -1,152 +1,110 @@
-# ♻️ WasteGuide AI
+# WasteGuide AI
 
-![WasteGuide AI Banner](./docs/images/banner.png)
+<p align="center">
+  <img src="docs/images/banner.png" alt="WasteGuide AI Terminal Banner" width="800">
+</p>
 
-### 🔗 Live Deployment & Demo
-- **Production Client App**: [https://wasteguideai-8133c.web.app](https://wasteguideai-8133c.web.app)
-- **API Base Endpoint**: `http://localhost:5000/api` (Local Dev) / `[Insert Hosted Server Link]` (Production)
-
----
-
-WasteGuide AI is a production-ready, AI-powered waste management operational console designed to automate material classification, calculate recovery efficiency, and map collection facilities. It features a retro-futuristic dark green terminal aesthetics with glowing green states, customized scanline animations, and real-time LLM-driven intelligence.
-
----
-
-## 🚀 Key Features
-
-1. **AI waste scanner**: Type object names or submit/simulate image captures. A backend Groq LLaMA-3 agent performs chemical/composition analysis and outputs strict structured responses.
-2. **Dynamic Collection Registry Map**: An interactive 5-column layout containing material filters, a customized Dark Matter Leaflet map, verified recycling hubs, and detailed route information.
-3. **Log History Explorer**: A searchable, tag-filtered log registry featuring persistent scans, recyclability badges, hazardous alarms, and details drawers.
-4. **Analytics Metrics Console**: Real-time tracking of logs processed, recycling efficiency margins, upcycling rates, and charts (breakdowns, timeline quantities, and line efficiency rates).
+<p align="center">
+  <img src="https://img.shields.io/badge/Release-v1.0.0-37D67A?style=flat-square&logo=git&logoColor=07140F" alt="Version">
+  <img src="https://img.shields.io/badge/Academic%20Partner-SmartBridge-emerald?style=flat-square" alt="Academic Partner">
+  <img src="https://img.shields.io/badge/Specialist%20Track-AI--Specialist-blue?style=flat-square" alt="Specialist Track">
+  <img src="https://img.shields.io/badge/License-MIT-lightgrey?style=flat-square" alt="License">
+</p>
 
 ---
 
-## 🎨 Theme & UI Style Guide
-
-The interface follows a **Dark Green Terminal Style** color palette:
-- **Background**: `#07140F` (deep pitch forest black)
-- **Surface**: `#10251C` (dark olive green)
-- **Border**: `#204732` (medium forest green)
-- **Accent**: `#37D67A` (glowing neon green)
-- **Text**: `#E8FFF3` (minty white console text)
-- **Muted**: `#8AA89A` (sage gray-green)
-
-### Typography
-- **Space Mono**: Primary font for navigation tabs, figures, code blocks, and badges.
-- **DM Sans**: Clean, high-legibility body copy.
-- **Barlow Condensed**: Bold headings and visual callouts.
+## 1. Project Overview
+**WasteGuide AI** is an intelligent, real-time waste classification and geolocation web assistant styled with a dark green terminal aesthetic. Built for the **SmartBridge AI Specialist Track** capstone project, it leverages **LLaMA 3.1** via the Groq API and **Firebase Firestore REST API** database handshakes to educate users on correct waste sorting, reducing recycling contamination at the point of disposal.
 
 ---
 
-## 🛠️ Technology Stack
+## 2. Problem Statement & Solution
 
-### Frontend
-- **React 19**
-- **React Router DOM**
-- **Tailwind CSS v4**
-- **Axios**
-- **Firebase Authentication**
-- **React ChartJS 2 / Chart.js**
-- **React Leaflet / Leaflet / OpenStreetMap**
-- **Lucide Icons**
+### The Problem
+*   **Contamination**: Consumer sorting errors introduce soiled cardboard, greasy foods, and soft plastics into clean streams, forcing recycling loads into landfills.
+*   **Wishcycling**: Residents place non-recyclable electronic parts or batteries into standard curbside bins, resulting in expensive machinery jams and sanitation hazards.
+*   **Complexity**: Municipal rules are too confusing, and static charts fail to provide real-time guidance when residents stand in front of the bins.
 
-### Backend
-- **Flask (Blueprint Architecture)**
-- **Groq API Client (LLaMA-3-8B)**
-- **Firebase Admin SDK (Firestore / Auth)**
-- **Flask CORS**
-- **python-dotenv**
+### The Solution
+*   **Instant AI Classifier**: Residents search for any waste item and receive categorization (Plastic, Glass, E-Waste, Organics) and step-by-step prep directions.
+*   **Pulsing Hazard Alerts**: Red alert flags warn of toxic items (batteries, LED bulbs), preventing ecological leaching.
+*   **Interactive Geolocation Map**: Pins centers accepting specialized waste, including Google Maps routing links.
+*   **Fail-Safe Caching**: Automatically routes records to local JSON database caching if cloud connections drop.
 
 ---
 
-## 📂 Project Structure
+## 3. Technology Stack
 
-```text
-WasteManagement/
-├── docs/
-│   └── images/
-│       └── banner.png                # Embedded terminal banner graphic
-├── backend/
-│   ├── config/
-│   │   ├── config.py                 # Environment configurations & validation
-│   │   └── firebase_config.py        # Firebase admin client initializer
-│   ├── routes/
-│   │   ├── waste.py                  # /api/waste/scan & /api/waste/history
-│   │   ├── centers.py                # /api/centers (list & filters)
-│   │   └── dashboard.py              # /api/dashboard/stats aggregator
-│   ├── services/
-│   │   ├── groq_service.py           # Groq AI scan agent & mock presets
-│   │   └── db_service.py             # Firestore client & persistent local fallback
-│   ├── data/
-│   │   └── history.json              # Local persistent logs cache in Demo Mode
-│   ├── app.py                        # Backend entrypoint (CORS & Blueprint bind)
-│   ├── requirements.txt              # Backend packages manifest
-│   └── .env                          # Local credentials file (ignored)
-├── frontend/
-│   ├── src/
-│   │   ├── assets/
-│   │   ├── components/               # Reusable modular visual components
-│   │   ├── context/
-│   │   │   └── AuthContext.jsx       # Firebase Auth / Mock local session manager
-│   │   ├── pages/                    # Home (Scanner), Map, History, Dashboard
-│   │   ├── services/
-│   │   │   └── api.js                # Axios central API config
-│   │   ├── App.jsx                   # Router declarations
-│   │   ├── index.css                 # Tailwind directives, animations & Leaflet tweaks
-│   │   └── main.jsx
-│   ├── index.html                    # Fonts configuration
-│   ├── vite.config.js                # Tailwind plugin registration
-│   ├── package.json                  # Frontend packages manifest
-│   └── .env                          # Frontend configurations (ignored)
-└── .gitignore                        # Global ignore patterns
+*   **Frontend Client**: React 19, Tailwind CSS, Leaflet Maps, Chart.js.
+*   **Backend Server**: Python 12, Flask, Gunicorn (WSGI).
+*   **AI Engine**: Groq Cloud API (`llama-3.1-8b-instant` LLM).
+*   **Database**: Firebase Firestore REST API (no private key JSON required).
+*   **Fallback Cache**: File-based local JSON database (`backend/data/history.json`).
+
+---
+
+## 4. Repository Directory Structure
+
+```
+Waste-Mangement/
+├── 1. Brainstorming & Ideation/   # Milestone 1 Documents
+├── 2. Requirement Analysis/       # Milestone 2 Documents
+├── 3. Project Design Phase/       # Milestone 3 Documents
+├── 4. Project Planning Phase/     # Milestone 4 Documents
+├── 5. Project Development Phase/   # Milestone 5 Documents
+├── 6. Performance Testing/        # Milestone 6 Documents
+├── 7. Documentation & Demo/       # Milestone 7 Documents
+├── 8. Project Demonstration/      # Milestone 8 Documents
+├── backend/                       # Python Flask Web Service
+│   ├── config/                    # Config modules
+│   ├── data/                      # Fallback history cache
+│   ├── routes/                    # Flask Blueprint endpoints
+│   ├── services/                  # Groq & Firestore services
+│   └── app.py                     # Backend entrypoint
+├── docs/                          # Guides & Banner graphics
+├── frontend/                      # React SPA Source Code
+│   ├── src/                       # Components, Pages, and Hooks
+│   ├── index.html                 # HTML body index
+│   └── vite.config.js             # Vite configuration
+├── Screenshots/                   # Cropped screenshots folder
+├── firebase.json                  # Firebase static host config
+└── README.md                      # Project documentation master
 ```
 
 ---
 
-## ⚡ Installation & Launch
+## 5. Quick Installation & Launch
 
-### Backend Setup
-1. Open a terminal and navigate to the backend:
-   ```bash
-   cd backend
-   ```
-2. Create and activate a Python virtual environment:
-   ```bash
-   python -m venv venv
-   .\venv\Scripts\activate
-   ```
-3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-4. Copy the environment template and insert your API credentials (optional):
-   ```bash
-   copy .env.example .env
-   ```
-5. Run the server:
-   ```bash
-   python -m backend.app
-   ```
+Detailed installation logs are available in [INSTALLATION.md](file:///c:/Users/Sameer/OneDrive/Desktop/WasteManagement/INSTALLATION.md).
 
-### Frontend Setup
-1. In a new terminal, navigate to the frontend:
-   ```bash
-   cd frontend
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Run the development server:
-   ```bash
-   npm run dev
-   ```
-4. Open **[http://localhost:5173](http://localhost:5173)** in your web browser.
+### 1. Launch the Backend Server
+```bash
+cd backend
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+# Copy .env.example to .env and configure your GROQ_API_KEY
+cd ..
+python -m backend.app
+```
+
+### 2. Launch the Frontend Dev Server
+```bash
+cd frontend
+npm install
+npm run dev
+```
+Open **`http://localhost:5173`** in your browser to run the app.
 
 ---
 
-## ⚙️ Offline / Demo Mode Fallback
+## 6. Screenshots & Demonstration
+Verify screenshot naming conventions and view instructions in [SCREENSHOTS.md](file:///c:/Users/Sameer/OneDrive/Desktop/WasteManagement/docs/SCREENSHOTS.md). Please save your cropped captures inside the [Screenshots/](file:///c:/Users/Sameer/OneDrive/Desktop/WasteManagement/Screenshots/) folder.
 
-To support immediate, out-of-the-box local developer testing:
-- **No Groq API Key**: If the Groq key is missing, the backend uses a local mock classification dataset. Any query matching one of the 12 quick-select items returns custom, high-fidelity metadata. Other items generate category-logical presets dynamically.
-- **No Firebase Config**: If Firebase configurations are absent, the client switches to local session simulation. It signs in users mock-style and writes scan logs to a persistent local cache file (`backend/data/history.json`).
+---
+
+## 7. Submission Status
+*   **Academic Partner**: SmartBridge Academy
+*   **AI Specialist Track Student**: Sameer
+*   **Submissions Checklist**: Review all submission deliverables in [SUBMISSION_CHECKLIST.md](file:///c:/Users/Sameer/OneDrive/Desktop/WasteManagement/SUBMISSION_CHECKLIST.md).
+*   **Comparison Audit**: View project-to-template alignment details in [COMPARISON_REPORT.md](file:///c:/Users/Sameer/OneDrive/Desktop/WasteManagement/COMPARISON_REPORT.md).

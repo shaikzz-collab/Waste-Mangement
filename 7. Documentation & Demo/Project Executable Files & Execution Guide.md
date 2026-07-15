@@ -6,10 +6,10 @@ This document lists the executable files and commands required to build, install
 
 ## 1. Directory Structure of Executables
 
--   `backend/`
+-   `7. Documentation & Demo/backend/`
     -   `app.py`: Backend entrypoint script.
     -   `requirements.txt`: Python dependencies list.
--   `frontend/`
+-   `7. Documentation & Demo/frontend/`
     -   `package.json`: NPM package management config.
     -   `vite.config.js`: Vite bundling configuration.
 
@@ -22,7 +22,7 @@ Open a terminal in the project root folder and execute:
 
 ```bash
 # 1. Navigate to backend directory and load virtual env (optional)
-cd backend
+cd "7. Documentation & Demo/backend"
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
@@ -32,7 +32,7 @@ pip install -r requirements.txt
 # 3. Create .env file with your API keys (copy from .env.example)
 # Add GROQ_API_KEY and Firebase REST keys
 
-# 4. Start the backend app (Run from the project root directory)
+# 4. Start the backend app (Run from the 7. Documentation & Demo directory)
 cd ..
 python -m backend.app
 ```
@@ -43,7 +43,7 @@ Open a second terminal in the project root folder and execute:
 
 ```bash
 # 1. Navigate to frontend directory
-cd frontend
+cd "7. Documentation & Demo/frontend"
 
 # 2. Install NPM node packages
 npm install

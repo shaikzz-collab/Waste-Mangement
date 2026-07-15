@@ -1,10 +1,10 @@
 # Dependencies
 node_modules/
-/frontend/node_modules/
+7.\ Documentation\ \&\ Demo/frontend/node_modules/
 
 # Production builds
 dist/
-/frontend/dist/
+7.\ Documentation\ \&\ Demo/frontend/dist/
 
 # Local Environment Variables & Secrets
 .env
@@ -12,8 +12,8 @@ dist/
 .env.development.local
 .env.test.local
 .env.production.local
-/frontend/.env
-/backend/.env
+7.\ Documentation\ \&\ Demo/frontend/.env
+7.\ Documentation\ \&\ Demo/backend/.env
 *service-account.json
 
 # Local Python caches & environment files
@@ -22,14 +22,18 @@ __pycache__/
 venv/
 .venv/
 env/
-/backend/venv/
+7.\ Documentation\ \&\ Demo/backend/venv/
 
 # Local databases
-/backend/data/history.json
-/backend/data/
+7.\ Documentation\ \&\ Demo/backend/data/history.json
+7.\ Documentation\ \&\ Demo/backend/data/
 
 # Editor / OS settings
 .DS_Store
 .vscode/
 .idea/
 Thumbs.db
+
+# Scratch and temp files
+temp_template/
+scratch/

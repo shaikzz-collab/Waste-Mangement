@@ -53,19 +53,19 @@ Waste-Mangement/
 ├── 4. Project Planning Phase/     # Milestone 4 Documents
 ├── 5. Project Development Phase/   # Milestone 5 Documents
 ├── 6. Performance Testing/        # Milestone 6 Documents
-├── 7. Documentation & Demo/       # Milestone 7 Documents
+├── 7. Documentation & Demo/       # Milestone 7 Documents (Contains Codebase)
+│   ├── backend/                   # Python Flask Web Service
+│   │   ├── config/                # Config modules
+│   │   ├── data/                  # Fallback history cache
+│   │   ├── routes/                # Flask Blueprint endpoints
+│   │   ├── services/              # Groq & Firestore services
+│   │   └── app.py                 # Backend entrypoint
+│   └── frontend/                  # React SPA Source Code
+│       ├── src/                   # Components, Pages, and Hooks
+│       ├── index.html             # HTML body index
+│       └── vite.config.js         # Vite configuration
 ├── 8. Project Demonstration/      # Milestone 8 Documents
-├── backend/                       # Python Flask Web Service
-│   ├── config/                    # Config modules
-│   ├── data/                      # Fallback history cache
-│   ├── routes/                    # Flask Blueprint endpoints
-│   ├── services/                  # Groq & Firestore services
-│   └── app.py                     # Backend entrypoint
 ├── docs/                          # Guides & Banner graphics
-├── frontend/                      # React SPA Source Code
-│   ├── src/                       # Components, Pages, and Hooks
-│   ├── index.html                 # HTML body index
-│   └── vite.config.js             # Vite configuration
 ├── Screenshots/                   # Cropped screenshots folder
 ├── firebase.json                  # Firebase static host config
 └── README.md                      # Project documentation master
@@ -79,7 +79,7 @@ Detailed installation logs are available in [INSTALLATION.md](file:///c:/Users/S
 
 ### 1. Launch the Backend Server
 ```bash
-cd backend
+cd "7. Documentation & Demo/backend"
 python -m venv venv
 source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
@@ -90,7 +90,7 @@ python -m backend.app
 
 ### 2. Launch the Frontend Dev Server
 ```bash
-cd frontend
+cd "7. Documentation & Demo/frontend"
 npm install
 npm run dev
 ```

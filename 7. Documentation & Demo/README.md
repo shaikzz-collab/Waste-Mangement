@@ -53,17 +53,20 @@ Waste-Mangement/
 ├── 4. Project Planning Phase/     # Milestone 4 Documents
 ├── 5. Project Development Phase/   # Milestone 5 Documents
 ├── 6. Performance Testing/        # Milestone 6 Documents
-├── 7. Documentation & Demo/       # Milestone 7 Documents (Contains Codebase)
-│   ├── backend/                   # Python Flask Web Service
-│   │   ├── config/                # Config modules
-│   │   ├── data/                  # Fallback history cache
-│   │   ├── routes/                # Flask Blueprint endpoints
-│   │   ├── services/              # Groq & Firestore services
-│   │   └── app.py                 # Backend entrypoint
-│   └── frontend/                  # React SPA Source Code
-│       ├── src/                   # Components, Pages, and Hooks
-│       ├── index.html             # HTML body index
-│       └── vite.config.js         # Vite configuration
+├── 7. Documentation & Demo/       # Milestone 7 Documents
+│   ├── src/                       # Project Source Files & PDF Templates
+│   │   ├── backend/               # Python Flask Web Service
+│   │   │   ├── config/            # Config modules
+│   │   │   ├── data/              # Fallback history cache
+│   │   │   ├── routes/            # Flask Blueprint endpoints
+│   │   │   ├── services/          # Groq & Firestore services
+│   │   │   └── app.py             # Backend entrypoint
+│   │   ├── frontend/              # React SPA Source Code
+│   │   │   ├── src/               # Components, Pages, and Hooks
+│   │   │   ├── index.html         # HTML body index
+│   │   │   └── vite.config.js     # Vite configuration
+│   │   ├── Project Executable Files & Execution Guide (2).pdf
+│   │   └── Sample Project Documentation.pdf
 ├── 8. Project Demonstration/      # Milestone 8 Documents
 ├── docs/                          # Guides & Banner graphics
 ├── Screenshots/                   # Cropped screenshots folder
@@ -75,11 +78,11 @@ Waste-Mangement/
 
 ## 5. Quick Installation & Launch
 
-Detailed installation logs are available in [INSTALLATION.md](file:///c:/Users/Sameer/OneDrive/Desktop/WasteManagement/INSTALLATION.md).
+Detailed installation logs are available in [INSTALLATION.md](file:///c:/Users/Sameer/OneDrive/Desktop/WasteManagement/7.%20Documentation%20&%20Demo/INSTALLATION.md) (or [relative link](./INSTALLATION.md)).
 
 ### 1. Launch the Backend Server
 ```bash
-cd "7. Documentation & Demo/backend"
+cd "7. Documentation & Demo/src/backend"
 python -m venv venv
 source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
@@ -90,7 +93,7 @@ python -m backend.app
 
 ### 2. Launch the Frontend Dev Server
 ```bash
-cd "7. Documentation & Demo/frontend"
+cd "7. Documentation & Demo/src/frontend"
 npm install
 npm run dev
 ```
@@ -106,5 +109,5 @@ Verify screenshot naming conventions and view instructions in [SCREENSHOTS.md](f
 ## 7. Submission Status
 *   **Academic Partner**: SmartBridge Academy
 *   **AI Specialist Track Student**: Sameer
-*   **Submissions Checklist**: Review all submission deliverables in [SUBMISSION_CHECKLIST.md](file:///c:/Users/Sameer/OneDrive/Desktop/WasteManagement/SUBMISSION_CHECKLIST.md).
-*   **Comparison Audit**: View project-to-template alignment details in [COMPARISON_REPORT.md](file:///c:/Users/Sameer/OneDrive/Desktop/WasteManagement/COMPARISON_REPORT.md).
+*   **Submissions Checklist**: Review all submission deliverables in [SUBMISSION_CHECKLIST.md](file:///c:/Users/Sameer/OneDrive/Desktop/WasteManagement/7.%20Documentation%20&%20Demo/SUBMISSION_CHECKLIST.md) (or [relative link](./SUBMISSION_CHECKLIST.md)).
+*   **Comparison Audit**: View project-to-template alignment details in [COMPARISON_REPORT.md](file:///c:/Users/Sameer/OneDrive/Desktop/WasteManagement/7.%20Documentation%20&%20Demo/COMPARISON_REPORT.md) (or [relative link](./COMPARISON_REPORT.md)).

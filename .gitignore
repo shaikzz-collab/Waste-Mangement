@@ -1,10 +1,10 @@
 # Dependencies
 node_modules/
-src/frontend/node_modules/
+7.\ Documentation\ \&\ Demo/src/frontend/node_modules/
 
 # Production builds
 dist/
-src/frontend/dist/
+7.\ Documentation\ \&\ Demo/src/frontend/dist/
 
 # Local Environment Variables & Secrets
 .env
@@ -12,8 +12,8 @@ src/frontend/dist/
 .env.development.local
 .env.test.local
 .env.production.local
-src/frontend/.env
-src/backend/.env
+7.\ Documentation\ \&\ Demo/src/frontend/.env
+7.\ Documentation\ \&\ Demo/src/backend/.env
 *service-account.json
 
 # Local Python caches & environment files
@@ -22,11 +22,11 @@ __pycache__/
 venv/
 .venv/
 env/
-src/backend/venv/
+7.\ Documentation\ \&\ Demo/src/backend/venv/
 
 # Local databases
-src/backend/data/history.json
-src/backend/data/
+7.\ Documentation\ \&\ Demo/src/backend/data/history.json
+7.\ Documentation\ \&\ Demo/src/backend/data/
 
 # Editor / OS settings
 .DS_Store

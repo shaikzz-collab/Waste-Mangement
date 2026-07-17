@@ -48,7 +48,8 @@ This repository is structured sequentially following the capstone milestone stag
 | 📁 [4. Project Planning Phase](file:///c:/Users/Sameer/OneDrive/Desktop/WasteManagement/4.%20Project%20Planning%20Phase/README.md) | Project WBS, scheduling Gantt chart, and task allocations. |
 | 📁 [5. Project Development Phase](file:///c:/Users/Sameer/OneDrive/Desktop/WasteManagement/5.%20Project%20Development%20Phase/README.md) | Completed React/Flask source code layout, AI prompts catalog, and developer workflow guidelines. |
 | 📁 [6. Performance Testing](file:///c:/Users/Sameer/OneDrive/Desktop/WasteManagement/6.%20Performance%20Testing/README.md) | Latency statistics, API response speeds, and complete User Acceptance Testing (UAT) checks. |
-| 📁 [7. Documentation & Demo](file:///c:/Users/Sameer/OneDrive/Desktop/WasteManagement/7.%20Documentation%20&%20Demo/) | Contains source code (frontend and backend) inside the 'src/' folder, along with the PDF guides outside it. |
+| 📁 [7. Documentation & Demo](file:///c:/Users/Sameer/OneDrive/Desktop/WasteManagement/7.%20Documentation%20&%20Demo/) | Contains the PDF guides (Execution Guide and Final Project Report) outside the codebase. |
+| 📁 [src](file:///c:/Users/Sameer/OneDrive/Desktop/WasteManagement/src/) | Contains the active project codebase (frontend React SPA and backend Flask API). |
 | 📁 [8. Project Demonstration](file:///c:/Users/Sameer/OneDrive/Desktop/WasteManagement/8.%20Project%20Demonstration/README.md) | Final scalability blueprints, team delegation charts, and evaluation run scripts. |
 
 ---
@@ -66,7 +67,7 @@ Follow the instructions below to configure and run the application locally.
 ### Backend Setup
 1. Navigate to the backend directory:
    ```bash
-   cd "7. Documentation & Demo/src/backend"
+   cd "src/backend"
    ```
 2. Create and activate a virtual environment:
    ```bash
@@ -94,7 +95,7 @@ Follow the instructions below to configure and run the application locally.
 ### Frontend Setup
 1. Open a new terminal and navigate to the frontend directory:
    ```bash
-   cd "7. Documentation & Demo/src/frontend"
+   cd "src/frontend"
    ```
 2. Install Node packages:
    ```bash
